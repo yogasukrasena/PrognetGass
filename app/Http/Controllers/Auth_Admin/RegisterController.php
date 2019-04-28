@@ -116,5 +116,12 @@ class RegisterController extends Controller
         return view('authAdmin.registerAdmin');
     }
 
+    public function showDataAdmin(){
+      
+      $tampilAdmin = Admin::all();
+
+      return view('viewAdmin.showAdmin', compact('tampilAdmin'));
+    }
+
 
 }

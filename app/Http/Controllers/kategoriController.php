@@ -80,6 +80,10 @@ class kategoriController extends Controller
     public function edit($id)
     {
         //
+        $showKategori = Kategori::select('product_categories.*')
+        ->where('id',$id)->get();
+
+        return view('viewAdmin.editKategori', compact('showKategori'));
     }
 
     /**
@@ -92,6 +96,13 @@ class kategoriController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $inKategori = Kategori::find($id);
+
+        $inKategori->category_name = $request->namaKategori;
+
+        $inKategori->save();
+
+        return redirect()->route('admin.showKategori')->with('alert','Data Sukses di Tambahkan');
     }
 
     /**

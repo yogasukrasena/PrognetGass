@@ -68,7 +68,33 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'profile_image' => 'profile_image',
-            'status' => 'aktif',
+            'status' => 0,
+            'remember_token' => str_random(190)
         ]);
     }
+
+    public function activating($token)
+    {
+        $model = User::where([
+            'remember_token' => $token,
+            'status'  => 0
+        ])
+            ->firstOrFail();
+        $model->status = 1;
+        $model->email_verified_at = date('Y-m-d H:i:s');
+        $model->save();
+        return 'akun anda telah aktif silahkan login.';
+    }
+
+    // public function photo(request $request, $id)
+    // {
+
+    //     if($file=$request->file('profileimage')){
+    //         $filenameWithExt = $file->getClientOriginalName();
+    //         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+    //         $extension = $file->getClientOriginalExtension();
+    //         $filenameToStore = $filename.'_'.time().'.'.$extension;
+    //         $path = $file->move(public_path('images/fotoProfile'), $filenameToStore);
+    //         $inData->profile_image = $filenameToStore;
+    // }
 }
