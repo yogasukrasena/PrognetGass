@@ -162,11 +162,23 @@ class productController extends Controller
                     '=', 'product_category_details.category_id')
                     ->select('product_categories.category_name')
                     ->where('product_category_details.product_id', $id)->get();
+
+    $test = Produk::find($id);
+
+    // return $test;
+
+    $showKategoriNo = Kategori::select('product_categories.*')
+                    ->whereNOTIn('product_categories.id', function($query) use ($test){
+                        $query->select('product_category_details.category_id')
+                        ->from('product_category_details')
+                        ->where('product_category_details.product_id',$test->id);
+                    })->get();
+
     $tampil = KategoriProduk::select('product_category_details.*')->where('product_id',$id)->get();
     $tampilKategori = Kategori::select('product_categories.*')->get();
     $showName = Produk::where('id',$id)->first();
-
-    return view('viewAdmin.showDetKProduct', compact('showKategori', 'showName', 'tampilKategori'));
+    // return $showKategoriNo;
+    return view('viewAdmin.showDetKProduct', compact('showKategori', 'showName', 'tampilKategori', 'tampil', 'showKategoriNo'));
     }
 
 

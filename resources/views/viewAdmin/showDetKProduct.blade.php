@@ -12,7 +12,7 @@
             <form  method="POST" action="{{ route('admin.tambahKategori', $showName->id) }}" >
               @csrf
               <label for="file-multiple-input" class=" form-control-label">Kategori Produk :</label>
-              @foreach($tampilKategori as $datas)
+              @foreach($showKategoriNo as $datas)
                 <div class="form-check-inline form-check">
                   <input type="checkbox" id="inline-checkbox1" name="kategori[]" value="{{ $datas->id }}" class="form-check-input">{{ $datas ->category_name }}
                 </div>

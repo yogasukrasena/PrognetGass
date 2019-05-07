@@ -30,7 +30,7 @@
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $data->username }}</td>
                   <td>{{ $data->name }}</td>
-                  <td><img class="user-avatar rounded-circle" src="{{ asset('images/fotoProfile/'.$data->profile_image) }}" alt="image"></td>
+                  <td><img src="{{ asset('images/fotoProfile/'.$data->profile_image) }}" alt="image" height="60" weight="60"></td>
                   <td>{{ $data->phone }}</td>
                   <td class="actions">
                     <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>

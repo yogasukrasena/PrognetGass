@@ -29,11 +29,17 @@ Route::get('admin/hapusProduct/{id}', 'productController@hapus')->name('admin.ha
 // --------------------------------------ROUTE RESOURCE---------------------------------------------------
 route::resource('admin/inKategori','kategoriController');
 route::resource('admin/inProduct','productController');
+route::resource('/user','userController');
+route::resource('/carts', 'cartsController');
 
+// --------------------------------------------ROUTE STORE----------------------------------------------------
 route::post('admin/tambahFoto/{id}', 'productController@fotoStore')->name('admin.tambahFoto');
 route::post('admin/tambahKategori/{id}', 'productController@kategoriStore')->name('admin.tambahKategori');
 
-
+route::get('pelanggan/edit/{user}', 'userController@edituser')->name('pelanggan.edit');
+Route::match(['put', 'patch'], '/pelanggan/update/{user}', 'userController@updateUser')->name('pelanggan.update');
+// {
+//     });('pelanggan/update/{user}', 'userController@updateUser')->name('pelanggan.update');
 
 // ----------------ROUTE LOGIN-------------------
 
@@ -41,7 +47,7 @@ Auth::routes();
 Route::get('/register/{token}','Auth\RegisterController@activating')->name('activating-account');
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
+Route::get('/pelanggan/logout', 'Auth\LoginController@logoutUser')->name('pelanggan.logout');
 
 
 Route::group(['prefix' => 'admin'], function()

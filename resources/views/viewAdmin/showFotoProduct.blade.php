@@ -43,7 +43,7 @@
                 <tr>
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $data->image_name }}</td>
-                  <td><img class="user-avatar rounded-circle" src="{{ asset('images/fotoProduct/'.$data->image_name) }}" alt="image"></td>
+                  <td><img src="{{ asset('images/fotoProduct/'.$data->image_name) }}" alt="image" height="60" weight="60"></td>
                   <td class="actions">
                     <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                     <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Request;
 
 class RegisterController extends Controller
 {
@@ -67,8 +68,6 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'profile_image' => 'profile_image',
-            'status' => 0,
             'remember_token' => str_random(190)
         ]);
     }
@@ -85,6 +84,7 @@ class RegisterController extends Controller
         $model->save();
         return 'akun anda telah aktif silahkan login.';
     }
+
 
     // public function photo(request $request, $id)
     // {
