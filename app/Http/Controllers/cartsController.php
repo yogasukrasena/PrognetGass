@@ -21,6 +21,7 @@ class cartsController extends Controller
     public function index()
     {
         //
+
     }
 
     /**
@@ -63,6 +64,7 @@ class cartsController extends Controller
     public function show($id)
     {
         //
+        $showCart = Carts::select('carts.*')->where('carts.id',$id)->get();
     }
 
     /**

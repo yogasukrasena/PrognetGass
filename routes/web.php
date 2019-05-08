@@ -38,8 +38,7 @@ route::post('admin/tambahKategori/{id}', 'productController@kategoriStore')->nam
 
 route::get('pelanggan/edit/{user}', 'userController@edituser')->name('pelanggan.edit');
 Route::match(['put', 'patch'], '/pelanggan/update/{user}', 'userController@updateUser')->name('pelanggan.update');
-// {
-//     });('pelanggan/update/{user}', 'userController@updateUser')->name('pelanggan.update');
+
 
 // ----------------ROUTE LOGIN-------------------
 

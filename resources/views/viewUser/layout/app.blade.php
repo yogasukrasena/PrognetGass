@@ -150,21 +150,21 @@
 								</span>
 							</div>
 						</li>
-                    </ul>
-                    <div class="header-cart-buttons">
-                        <div class="header-cart-wrapbtn">
-                            <!-- Button -->
-                            <a href="{{ route('pelanggan.logout') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                Logout
-                            </a>
-                        </div>
-                        <div class="header-cart-wrapbtn">
-                            <!-- Button -->
-                            <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                Edit
-                            </a>
-                        </div>
-                    </div>
+            </ul>
+            	<div class="header-cart-buttons">
+                <div class="header-cart-wrapbtn">
+                  <!-- Button -->
+                  <a href="{{ route('pelanggan.logout') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                      Logout
+                  </a>
+                </div>
+                <div class="header-cart-wrapbtn">
+                  <!-- Button -->
+                  <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                      Edit
+                  </a>
+              </div>
+            </div>
 				</div>
 				@endif
 			</div>
@@ -192,39 +192,7 @@
 									1 x $19.00
 								</span>
 							</div>
-						</li>
-
-						<li class="header-cart-item">
-							<div class="header-cart-item-img">
-								<img src="images/item-cart-02.jpg" alt="IMG">
-							</div>
-
-							<div class="header-cart-item-txt">
-								<a href="#" class="header-cart-item-name">
-									Converse All Star Hi Black Canvas
-								</a>
-
-								<span class="header-cart-item-info">
-									1 x $39.00
-								</span>
-							</div>
-						</li>
-
-						<li class="header-cart-item">
-							<div class="header-cart-item-img">
-								<img src="images/item-cart-03.jpg" alt="IMG">
-							</div>
-
-							<div class="header-cart-item-txt">
-								<a href="#" class="header-cart-item-name">
-									Nixon Porter Leather Watch In Tan
-								</a>
-
-								<span class="header-cart-item-info">
-									1 x $17.00
-								</span>
-							</div>
-						</li>
+						</li>									
 					</ul>
 
 					<div class="header-cart-total">
@@ -329,13 +297,13 @@
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
-									@if(Auth::user()->profile_image = "profile_image")
+									@if(Auth::user()->profile_image != "image")
 									<div class="header-cart-item-img">
-										<img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
+										<img src="{{ asset('images/fotoProfileUsers/'.Auth::user()->profile_image) }}" alt="IMG">
 									</div>
 									@else
 									<div class="header-cart-item-img">
-										<img src="{{ asset('images/fotoProduct/'.Auth::user()->profile_image) }}" alt="IMG">
+										<img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
 									</div>
 									@endif
 
@@ -352,18 +320,18 @@
 							</ul>
 
 							<div class="header-cart-buttons">
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="{{ route('pelanggan.logout') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        Logout
-                                    </a>
-                                </div>
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        Edit
-                                    </a>
-                                </div>
+                <div class="header-cart-wrapbtn">
+                  <!-- Button -->
+                  <a href="{{ route('pelanggan.logout') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                      Logout
+                  </a>
+                </div>
+                <div class="header-cart-wrapbtn">
+                  <!-- Button -->
+                  <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                      Edit
+                  </a>
+                </div>
 							</div>
 						</div>
 						@endif
@@ -392,39 +360,7 @@
 											1 x $19.00
 										</span>
 									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
+								</li>																
 							</ul>
 
 							<div class="header-cart-total">
@@ -556,13 +492,13 @@
 					<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
-									@if(Auth::user()->profile_image = "profile_image")
+									@if(Auth::user()->profile_image != "image")
 									<div class="header-cart-item-img">
-										<img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
+										<img src="{{ asset('images/fotoProfileUsers/'.Auth::user()->profile_image) }}" alt="IMG">
 									</div>
 									@else
 									<div class="header-cart-item-img">
-										<img src="{{ asset('images/fotoProduct/'.Auth::user()->profile_image) }}" alt="IMG">
+										<img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
 									</div>
 									@endif
 
@@ -583,13 +519,13 @@
 									<a href="{{ route('pelanggan.logout') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Logout
 									</a>
-                                </div>
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        Edit
-                                    </a>
-                                </div>
+                </div>
+                <div class="header-cart-wrapbtn">
+                  <!-- Button -->
+                  <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                      Edit
+                  </a>
+                </div>
 							</div>
 						</div>
 					</div>
@@ -610,46 +546,14 @@
 
 									<div class="header-cart-item-txt">
 										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
+											
 										</a>
 
 										<span class="header-cart-item-info">
 											1 x $19.00
 										</span>
 									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
+								</li>							
 							</ul>
 
 							<div class="header-cart-total">
