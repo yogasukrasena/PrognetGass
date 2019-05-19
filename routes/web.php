@@ -39,6 +39,11 @@ route::post('admin/tambahKategori/{id}', 'productController@kategoriStore')->nam
 route::get('pelanggan/edit/{user}', 'userController@edituser')->name('pelanggan.edit');
 Route::match(['put', 'patch'], '/pelanggan/update/{user}', 'userController@updateUser')->name('pelanggan.update');
 
+Route::get('pelanggan/getProvice', 'RajaOngkir@getProvince');
+Route::get('pelanggan/getCity', 'RajaOngkir@getCity');
+Route::get('pelanggan/checkshipping', 'RajaOngkir@checkshipping');
+Route::get('pelanggan/chekout', 'cartsController@chekout')->name('pelanggan.chekout');
+
 
 // ----------------ROUTE LOGIN-------------------
 

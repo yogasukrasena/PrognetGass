@@ -131,11 +131,11 @@
 								<li class="header-cart-item">
 									@if(Auth::user()->profile_image != "image")
 									<div class="header-cart-item-img">
-                                        <img src="{{ asset('images/fotoProduct/'.Auth::user()->profile_image) }}" alt="IMG">
+                    <img src="{{ asset('images/fotoProduct/'.Auth::user()->profile_image) }}" alt="IMG">
 									</div>
 									@else
 									<div class="header-cart-item-img">
-                                        <img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
+                    <img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
 									</div>
 									@endif
 									<div class="header-cart-item-txt">
@@ -168,6 +168,23 @@
 						@endif
 					</div>
 
+					@php 
+						use App\Carts;
+						use App\User;
+						use App\Produk;
+						use App\GambarProduk;
+
+						$id = Auth::id();
+						// return($id);
+						
+						$carts = Produk::join('carts', 'products.id', '=', 'carts.product_id')
+									->join('product_images', 'products.id', '=', 'product_images.product_id')
+									->select('carts.user_id', 'carts.qty', 'products.product_name', 'products.price', 'product_images.image_name')
+									->where('carts.user_id', $id)
+									->groupBy('products.id')
+									->get();
+					@endphp
+
 					<span class="linedivide1"></span>
 
 					<div class="header-wrapicon2">
@@ -178,62 +195,41 @@
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
+									@foreach($carts as $datas)
 									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
+										<img src="{{ asset('images/fotoProduct/'.$datas->image_name) }}" alt="IMG" height="80" width="80">
 									</div>
 
 									<div class="header-cart-item-txt">
 										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
+											{{ $datas->product_name }}
 										</a>
 
 										<span class="header-cart-item-info">
-											1 x $19.00
+											{{ $datas->qty }} x Rp.{{ number_format($datas->price) }}
 										</span>
 									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
+									@endforeach
 								</li>
 							</ul>
 
+							@php
+							 $tot = 0;
+							@endphp
+							@foreach($carts as $datas)
+								@php
+									$tot = $tot + ($datas->qty * $datas->price);
+								@endphp
+							@endforeach
+
 							<div class="header-cart-total">
-								Total: $75.00
+								Total : Rp.{{ number_format($tot) }}
 							</div>
 
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="{{ route('carts.index') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -309,11 +305,11 @@
 								<li class="header-cart-item">
 									@if(Auth::user()->profile_image != "image")
 									<div class="header-cart-item-img">
-                                        <img src="{{ asset('images/fotoProduct/'.Auth::user()->profile_image) }}" alt="IMG">
+                      <img src="{{ asset('images/fotoProduct/'.Auth::user()->profile_image) }}" alt="IMG">
 									</div>
 									@else
 									<div class="header-cart-item-img">
-                                        <img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
+                      <img src="{{ asset('images/avatar/user.png') }}" alt="IMG">
 									</div>
 									@endif
 									<div class="header-cart-item-txt">
@@ -333,13 +329,13 @@
 									<a href="{{ route('pelanggan.logout') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Login
 									</a>
-                                </div>
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        Edit
-                                    </a>
-                                </div>
+                </div>
+                <div class="header-cart-wrapbtn">
+                    <!-- Button -->
+                    <a href="{{ route('pelanggan.edit', Auth::user()->id) }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                        Edit
+                    </a>
+                </div>
 							</div>
 						</div>
 					@endif
@@ -355,62 +351,32 @@
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
 								<li class="header-cart-item">
+									@foreach($carts as $datas)
 									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
+										<img src="{{ asset('images/fotoProduct/'.$datas->image_name) }}" alt="IMG">
 									</div>
 
 									<div class="header-cart-item-txt">
 										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
+											{{ $datas->product_name }}
 										</a>
 
 										<span class="header-cart-item-info">
-											1 x $19.00
+											{{ $datas->qty }} x Rp.{{ number_format($datas->price) }}
 										</span>
 									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
+									@endforeach
 								</li>
 							</ul>
 
 							<div class="header-cart-total">
-								Total: $75.00
+								Total: {{ number_format($tot) }}
 							</div>
 
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="{{ route('carts.index') }}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
