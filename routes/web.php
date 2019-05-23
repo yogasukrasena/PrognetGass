@@ -64,6 +64,7 @@ Route::match(['put', 'patch'], '/pelanggan/success/{id}', 'cartsController@succe
 Route::get('pelanggan/review/{id}', 'cartsController@reviewProduk')->name('pelanggan.review');
 Route::get('pelanggan/inReview/{id}', 'cartsController@inputReview')->name('pelanggan.inReview');
 Route::post('pelanggan/storeReview', 'cartsController@storeReview')->name('pelanggan.storeReview');
+Route::get('pelanggan/readNotif', 'cartsController@markRead')->name('pelanggan.readNotif');
 
 
 

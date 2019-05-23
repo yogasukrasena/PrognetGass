@@ -13,7 +13,22 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Chart Demo</div>
 
+                    <div class="panel-body">
+                        {!! $chart->html() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {!! Charts::scripts() !!}
+    {!! $chart->script() !!}
+    
     <div class="col-sm-6 col-lg-3">
         <div class="card text-white bg-flat-color-1">
             <div class="card-body pb-0">

@@ -245,6 +245,50 @@
 					</div>
 				</div>
 			</div>
+
+			<span class="linedivide1"></span>
+
+			 @php
+	          use App\Transaksi;
+	          use App\ReviewProduk;	          
+	          use App\ResponReview;
+	          use App\UserNotif;
+
+	          $Notif = UserNotif::select('user_notifications.data')
+	          ->where('read_at', NULL)   
+	          ->get();
+
+	          $jumlahNotif = $Notif->count();
+
+	      @endphp
+
+			<div class="header-wrapicon2">
+				<img src="images/icons/bell.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+				<span class="header-icons-noti">{{ $jumlahNotif }}</span>
+
+				<!-- Header cart noti -->
+				<div class="header-cart header-dropdown">
+					<ul class="header-cart-wrapitem">
+						<li class="header-cart-item">							
+							<div class="header-cart-item-txt">								
+								<a href="{{ route('pelanggan.readNotif') }}">Read all</a>
+							</div>													
+						</li>									
+					</ul>
+					@foreach($Notif as $data)	
+					<ul class="header-cart-wrapitem">
+						<li class="header-cart-item">							
+							<div class="header-cart-item-txt">								
+								{{ $data->data }}
+							</div>													
+						</li>									
+					</ul>	
+					@endforeach
+					<div class="header-cart-total">
+						
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 

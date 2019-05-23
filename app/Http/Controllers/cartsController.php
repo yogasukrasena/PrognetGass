@@ -417,7 +417,7 @@ class cartsController extends Controller
         
 
         $admin = Admin::first();
-        $admin->notify(new NotifikasiAdmin('ada TRANSAKSI Baru Yang Masuk '));                                                                         
+        $admin->notify(new NotifikasiAdmin('ada TRANSAKSI Baru Yang Masuk'));                                                                         
         return redirect('/user');
     }
 
@@ -454,6 +454,9 @@ class cartsController extends Controller
             $veriv->proof_of_payment = $filenameToStore;
         }
         $veriv->save();
+
+        $admin = Admin::first();
+        $admin->notify(new NotifikasiAdmin('ada Bukti Pembayaran Baru'));
 
         return redirect()->back();   
     }
@@ -510,6 +513,9 @@ class cartsController extends Controller
         $showDetail = Transaksi::select('transactions.*')
         ->where('transactions.id', $id)->get();
 
+        $admin = Admin::first();
+        $admin->notify(new NotifikasiAdmin('Barang Sudah Sampai di Pelanggan'));           
+
         return view('viewUser.detailTransaksi', compact('show', 'showDetail'));
     }
 
@@ -551,10 +557,19 @@ class cartsController extends Controller
 
         $inReview->save();
 
+        $admin = Admin::first();
+        $admin->notify(new NotifikasiAdmin('ada Review Produk'));
+
         return redirect()->back();
     }
 
-   
+   public function markRead(){
+
+        $admin = User::find(Auth::user()->id);
+        $admin->unreadNotifications()->update(['read_at' => now()]);
+
+        return redirect()->back();
+    }
 
 }
 

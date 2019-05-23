@@ -12,6 +12,6 @@ class Transaksi extends Model
     protected $fillable = [
         'timeout', 'address', 'regency', 
         'province', 'total', 'shipping_cost', 'sub_total',
-        'user_id', 'courier_id', 'proof_of_payment', 'status'
+        'user_id', 'courier_id', 'proof_of_payment', 'status', 'created_at'
     ];
 }

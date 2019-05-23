@@ -118,15 +118,15 @@ class transaksiAdminController extends Controller
         $verif->status = 'verified';
         $verif->save();
 
-        $user_id = $verif->user_id;
-        $useid = User::where('id',$user_id)->get();
-
         $show = Transaksi::select('transactions.*', 'users.name')
         ->join('users', 'users.id', '=', 'transactions.user_id')
         ->get();
 
+        $user_id = $verif->user_id;
+        $useid = User::where('id',$user_id)->get();
+
         foreach($useid as $data)        
-        $data->notify(new NotifikasiUser('Transaksi Terverifikasi '));
+        $data->notify(new NotifikasiUser('Transaksi Terverifikasi'));
 
         return view('viewAdmin.showTransaksi', compact('show'));
     }
@@ -145,7 +145,7 @@ class transaksiAdminController extends Controller
         ->get();
 
         foreach($useid as $data)        
-        $data->notify(new NotifikasiUser('Transaksi Terverifikasi '));
+        $data->notify(new NotifikasiUser('Barang Pesanan Dikirim'));
 
         return view('viewAdmin.showTransaksi', compact('show'));
     }
@@ -183,6 +183,14 @@ class transaksiAdminController extends Controller
         $inReview->content = $request->responUlasan;
 
         $inReview->save();
+
+        $user_id = ReviewProduk::select('product_reviews.user_id')
+        ->where('product_reviews.id', $request->idUlasan);
+        
+        $useid = User::where('id',$user_id)->get();
+        
+        foreach($useid as $data)        
+        $data->notify(new NotifikasiUser('Transaksi Terverifikasi'));
 
         return redirect()->back()->with('alert','Respon Berhasil di Tambahkan');
     }         
