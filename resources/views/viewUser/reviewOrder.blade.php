@@ -3,15 +3,15 @@
 <!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url({{ asset('images/cartsfoto.jpg') }});">
 		<h2 class="l-text2 t-center">
-			Cart
+			Review Order
 		</h2>
 	</section>
 
 <!-- Cart -->
 	<section class="cart bgwhite p-t-70 p-b-100">
-		<form action="{{ route('pelanggan.chekout') }}">
-			@csrf
+		<form action="{{ route('pelanggan.transaksi') }}" method="POST" enctype="multipart/form-data">
 		<div class="container">
+			{{ csrf_field() }}  
 			<!-- Cart item -->
 			<div class="container-table-cart pos-relative">
 				<div class="wrap-table-shopping-cart bgwhite">
@@ -24,6 +24,8 @@
 							<th class="column-5">Total</th>
 						</tr>
 						@foreach($carts as $data)
+						<input type="hidden" name="hargaJual[]" value="{{ $data->qty * $data->price }}">
+						<input type="hidden" name="idProduct[]" value="{{ $data->id }}">
 						<tr class="table-row">
 							<td class="column-1">
 								<div class="cart-img-product b-rad-4 o-f-hidden">
@@ -33,18 +35,8 @@
 							<td class="column-2">{{ $data->product_name }}</td>
 							<td class="column-3">Rp.{{ number_format($data->price) }}</td>
 							<td class="column-4">
-								<div class="flex-w bo5 of-hidden w-size17">
-									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
-
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="{{ $data->qty }}">
-
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
-										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-									</button>
-								</div>
-							</td>
+								<input class="size8 m-text18 t-center num-product" type="number" name="jumlahProduct[]" value="{{ $data->qty }}">
+							</td>							
 							<td class="column-5">Rp.{{ number_format($data->qty * $data->price) }}</td>
 						</tr>
 						@endforeach
@@ -59,17 +51,7 @@
 						Update Cart
 					</button>
 				</div>
-			</div>
-			@php
-			 $tot = 0;
-			 $berat = 0;
-			@endphp
-			@foreach($carts as $datas)
-				@php
-					$tot = $tot + ($datas->qty * $datas->price);
-					$berat = $berat + ($datas->qty * $datas->weight);
-				@endphp
-			@endforeach
+			</div>			
 			<!-- Total -->
 			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 				<h5 class="m-text20 p-b-24">
@@ -79,11 +61,12 @@
 				<!--  -->
 				<div class="flex-w flex-sb-m p-b-12">
 					<span class="s-text18 w-size19 w-full-sm">
-						Subtotal:
+						Subtotal(Rp):
 					</span>
 
+					<input type="hidden" name="totalBarang" value="{{ $subtotal }}">
 					<span class="m-text21 w-size20 w-full-sm">
-						<input type="text" name="total" value="{{ number_format($tot) }}">						
+						<input type="text" value="{{ number_format($subtotal) }}">
 					</span>
 				</div>
 
@@ -92,8 +75,9 @@
 						Berat Total(gram):
 					</span>
 
+					<input type="hidden" name="berat" value="{{ $berat }}">
 					<span class="m-text21 w-size20 w-full-sm">
-						<input type="text" name="berat" value="{{ $berat }}">
+						<input type="text" value="{{ number_format($berat) }}">
 					</span>
 				</div>
 
@@ -116,22 +100,49 @@
 							<select class="selection-2" name="kota">
 								<option>Pilih Kota Tujuan</option>
 								@for($i = 0; $i < count($dataCity); $i++)
-									<option value="{{ $dataCity[$i]['city_id'] }}" >{{ $dataCity[$i]['city_name'] }}</option>		
+									@if($dataCity[$i]["city_id"] == $kota)									
+										<option value="{{ $dataCity[$i]['city_name'] }}" selected="selected">{{ $dataCity[$i]['city_name'] }}</option>	
+									@endif	
 								@endfor
 							</select>
 						</div>
 
 						<div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
-							<select class="selection-2" name="kurir">
-								<option>Pilih Kurir</option>
-								@foreach($daftarKurir as $datas)								
-									<option value="{{ $datas->courier }}" >{{ $datas->courier_name }}</option>
-								@endforeach
+							<select class="selection-2" name="provinsi">
+								<option>Pilih Provinsi Tujuan</option>
+								@for($i = 0; $i < count($dataProv); $i++)
+									@if($dataProv[$i]["province_id"] == $prov_idData)
+										<option value="{{ $dataProv[$i]['province'] }}" selected="selected">{{ $dataProv[$i]['province'] }}</option>
+									@endif		
+								@endfor
 							</select>
 						</div>
 
+						<input class="sizefull s-text7 p-l-15 p-r-15" type="hidden" name="alamat" placeholder="Alamat Tujuan" value="{{ $alamat }}">
 						<div class="size13 bo4 m-b-12">
-							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="alamat" placeholder="Alamat Tujuan">
+							<input class="sizefull s-text7 p-l-15 p-r-15" disabled="disabled" type="text" placeholder="Alamat Tujuan" value="{{ $alamat }}">
+						</div>
+
+						<input class="sizefull s-text7 p-l-15 p-r-15" type="hidden" name="kurir" placeholder="Alamat Tujuan" value="{{ $kurir }}">
+						<div class="size13 bo4 m-b-12">
+							<input class="sizefull s-text7 p-l-15 p-r-15" disabled="disabled" type="text" value="{{ $kurir }}">
+						</div>
+
+						<input type="hidden" name="ongkir" value="{{ $ongkir }}">
+						<div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
+							<select class="selection-2" disabled="disabled" >
+								<option>Pilih Layanan Ongkir</option>
+								@for($i = 0; $i < count($dataOngkir); $i++)
+									@if($dataOngkir[$i]["cost"]["0"]["value"] == $ongkir)
+									<option value="{{ $dataOngkir[$i]["cost"]["0"]["value"] }}" selected="">{{ $dataOngkir[$i]['service'].', estimasi : '.$dataOngkir[$i]["cost"]["0"]["etd"].'hari' }}</option>
+									@endif
+								@endfor
+							</select>
+						</div>
+
+						<input class="sizefull s-text7 p-l-15 p-r-15" type="hidden" name="hargaOngkir" placeholder="Alamat Tujuan" value="{{ $ongkir}}">	
+						<div class="size13 bo4 m-b-12">
+							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" disabled="disabled" placeholder="Alamat Tujuan" value="{{ $ongkir}}">
 						</div>
 
 						<div class="size14 trans-0-4 m-b-10">
@@ -149,15 +160,16 @@
 						Total:
 					</span>
 
+					<input type="hidden" name="totalBayar" value="{{ $totalBiaya }}">
 					<span class="m-text21 w-size20 w-full-sm">
-						Rp.{{ number_format($tot) }}
+						Rp.{{ number_format($totalBiaya) }}
 					</span>
 				</div>
 
 				<div class="size15 trans-0-4">
 					<!-- Button -->
 					<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-						Lanjutkan
+						Review Order
 					</button>
 				</div>
 			</div>

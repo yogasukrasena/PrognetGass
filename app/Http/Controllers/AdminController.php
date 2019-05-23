@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Admin;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\NotifikasiAdmin;
+use Auth;
+
 
 class AdminController extends Controller
 {
@@ -22,7 +27,7 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {        
         return view('viewAdmin.index');
     }
 }

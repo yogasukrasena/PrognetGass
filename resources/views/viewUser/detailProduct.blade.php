@@ -26,7 +26,7 @@
 	<!-- Product Detail -->
 	<div class="container bgwhite p-t-35 p-b-80">
 		<div class="flex-w flex-sb">
-			<div class="w-size13 p-t-30 respon5">
+			<div class="w-size13 p-t-30 respon5">				
 				<div class="wrap-slick3 flex-sb flex-w">
 					<div class="wrap-slick3-dots"></div>
 

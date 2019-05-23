@@ -56,7 +56,13 @@
                     </li>
                     <li class="{{ Route::currentRouteNamed('admin.showKategori', 'inKategori.edit', 'inKategori.index' ) ? 'active' : '' }}">
                         <a href="{{ route('admin.showKategori') }}"> <i class="menu-icon fa fa-th"></i>Kategori</a>
-                    </li>                                                           
+                    </li> 
+                     <li class="{{ Route::currentRouteNamed('admin.showKategori', 'inKategori.edit', 'inKategori.index' ) ? 'active' : '' }}">
+                        <a href="{{ route('transaksi.index') }}"> <i class="menu-icon fa fa-th"></i>Daftar Transaksi</a>
+                    </li>
+                    <li class="{{ Route::currentRouteNamed('admin.showKategori', 'inKategori.edit', 'inKategori.index' ) ? 'active' : '' }}">
+                        <a href="{{ route('admin.review') }}"> <i class="menu-icon fa fa-th"></i>Review Pelanggan</a>
+                    </li>                                                              
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -84,25 +90,38 @@
                             </form>
                         </div>
 
+                        @php
+                            use App\Transaksi;
+                            use App\ReviewProduk;
+                            use App\Produk;
+                            use App\ResponReview;
+                            use App\AdminNotif;
+
+                            $Notif = AdminNotif::select('admin_notifications.data')
+                            ->where('read_at', NULL)   
+                            ->get();
+
+                            $jumlahNotif = $Notif->count();
+
+                        @endphp
+
                         <div class="dropdown for-notification">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell"></i>
-                                <span class="count bg-danger">5</span>
+                                <span class="count bg-danger">{{ $jumlahNotif }}</span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="notification">
-                                <p class="red">You have 3 Notification</p>
-                                <a class="dropdown-item media bg-flat-color-1" href="#">
+                                <p class="red">You have {{ $jumlahNotif }} Notif</p>
+                                <a class="dropdown-item" href="{{ route('admin.readNotif') }}">
                                 <i class="fa fa-check"></i>
-                                <p>Server #1 overloaded.</p>
+                                <p>Read All</p>
                             </a>
-                                <a class="dropdown-item media bg-flat-color-4" href="#">
+                            @foreach($Notif as $data)
+                                <a class="dropdown-item media" href="#">
                                 <i class="fa fa-info"></i>
-                                <p>Server #2 overloaded.</p>
+                                <p>{{ $data->data }}</p>
                             </a>
-                                <a class="dropdown-item media bg-flat-color-5" href="#">
-                                <i class="fa fa-warning"></i>
-                                <p>Server #3 overloaded.</p>
-                            </a>
+                            @endforeach                                
                             </div>
                         </div>
 

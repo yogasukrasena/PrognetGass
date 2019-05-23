@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\AdminNotif;
 
 class Admin extends Authenticatable
 {
@@ -38,4 +39,8 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     public function notifications(){
+        return $this->morphMany(AdminNotif::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
 }

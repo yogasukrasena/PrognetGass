@@ -78,7 +78,7 @@
 					</li>
 
 					<li>
-						<a href="contact.html">Contact</a>
+						<a href="{{ route('pelanggan.showTransaksi') }}">Daftar Transaksi</a>
 					</li>
 				</ul>
 			</nav>
@@ -180,8 +180,9 @@
 					
 				$carts = Produk::join('carts', 'products.id', '=', 'carts.product_id')
 								->join('product_images', 'products.id', '=', 'product_images.product_id')
-								->select('carts.user_id', 'carts.qty', 'products.product_name', 'products.price', 'product_images.image_name')
+								->select('carts.user_id', 'carts.qty', 'products.product_name', 'products.price', 'product_images.image_name', 'carts.status')
 								->where('carts.user_id', $id)
+								->where('carts.status', '=', 'notyet')
 								->groupBy('products.id')
 								->get();
 			@endphp
@@ -196,7 +197,7 @@
 				<div class="header-cart header-dropdown">
 					<ul class="header-cart-wrapitem">
 						<li class="header-cart-item">
-							@foreach($carts as $datas)
+							@foreach($carts as $datas)							
 							<div class="header-cart-item-img">
 								<img src="{{ asset('images/fotoProduct/'.$datas->image_name) }}" alt="IMG">
 							</div>
@@ -209,7 +210,7 @@
 								<span class="header-cart-item-info">
 									{{ $datas->qty }} x Rp.{{ number_format($datas->price) }}
 								</span>
-							</div>
+							</div>						
 							@endforeach
 						</li>									
 					</ul>
