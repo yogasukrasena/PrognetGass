@@ -22,7 +22,8 @@
     <link rel="stylesheet" href="{{ asset('vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/selectFX/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/jqvmap/dist/jqvmap.min.css') }}">
-
+    {!! Charts::styles() !!}
+    <script type="text/javascript" src="{{ asset('Chart.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
@@ -58,10 +59,10 @@
                         <a href="{{ route('admin.showKategori') }}"> <i class="menu-icon fa fa-th"></i>Kategori</a>
                     </li> 
                      <li class="{{ Route::currentRouteNamed('admin.showKategori', 'inKategori.edit', 'inKategori.index' ) ? 'active' : '' }}">
-                        <a href="{{ route('transaksi.index') }}"> <i class="menu-icon fa fa-th"></i>Daftar Transaksi</a>
+                        <a href="{{ route('transaksi.index') }}"> <i class="menu-icon fa fa-money"></i>Daftar Transaksi</a>
                     </li>
                     <li class="{{ Route::currentRouteNamed('admin.showKategori', 'inKategori.edit', 'inKategori.index' ) ? 'active' : '' }}">
-                        <a href="{{ route('admin.review') }}"> <i class="menu-icon fa fa-th"></i>Review Pelanggan</a>
+                        <a href="{{ route('admin.review') }}"> <i class="menu-icon fa  fa-clipboard"></i>Review Pelanggan</a>
                     </li>                                                              
                 </ul>
             </div><!-- /.navbar-collapse -->

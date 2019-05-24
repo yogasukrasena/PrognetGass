@@ -44,37 +44,46 @@
 			<img src="images/icons/logo.png" alt="IMG-LOGO" height="100" weight="100">
 		</a>
 
+		 @php
+	          use App\Transaksi;
+	          use App\ReviewProduk;	          
+	          use App\ResponReview;
+	          use App\UserNotif;
+
+	          $Notif = UserNotif::select('user_notifications.data')
+	          ->where('read_at', NULL)   
+	          ->get();
+
+	          $jumlahNotif = $Notif->count();
+
+	      @endphp
+
 		<!-- Menu -->
 		<div class="wrap_menu">
 			<nav class="menu">
 				<ul class="main_menu">
 					<li>
-						<a href="index.html">Home</a>
-						<ul class="sub_menu">
-							<li><a href="index.html">Homepage V1</a></li>
-							<li><a href="home-02.html">Homepage V2</a></li>
-							<li><a href="home-03.html">Homepage V3</a></li>
-						</ul>
+						<a href="/user">Home</a>						
 					</li>
 
 					<li>
 						<a href="product.html">Shop</a>
 					</li>
 
-					<li class="sale-noti">
+					<li>
 						<a href="product.html">Sale</a>
 					</li>
 
 					<li>
-						<a href="cart.html">Features</a>
+						<a href="cart.html">Atomizer</a>
 					</li>
 
 					<li>
-						<a href="blog.html">Blog</a>
+						<a href="blog.html">Device</a>
 					</li>
 
 					<li>
-						<a href="about.html">About</a>
+						<a href="about.html">Liquid</a>
 					</li>
 
 					<li>
@@ -247,20 +256,6 @@
 			</div>
 
 			<span class="linedivide1"></span>
-
-			 @php
-	          use App\Transaksi;
-	          use App\ReviewProduk;	          
-	          use App\ResponReview;
-	          use App\UserNotif;
-
-	          $Notif = UserNotif::select('user_notifications.data')
-	          ->where('read_at', NULL)   
-	          ->get();
-
-	          $jumlahNotif = $Notif->count();
-
-	      @endphp
 
 			<div class="header-wrapicon2">
 				<img src="images/icons/bell.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
@@ -457,6 +452,36 @@
 							</div>
 						</div>
 					</div>
+
+					<span class="linedivide1"></span>
+
+					<div class="header-wrapicon2">
+						<img src="images/icons/bell.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span class="header-icons-noti">{{ $jumlahNotif }}</span>
+
+						<!-- Header cart noti -->
+						<div class="header-cart header-dropdown">
+							<ul class="header-cart-wrapitem">
+								<li class="header-cart-item">							
+									<div class="header-cart-item-txt">								
+										<a href="{{ route('pelanggan.readNotif') }}">Read all</a>
+									</div>													
+								</li>									
+							</ul>
+							@foreach($Notif as $data)	
+							<ul class="header-cart-wrapitem">
+								<li class="header-cart-item">							
+									<div class="header-cart-item-txt">								
+										{{ $data->data }}
+									</div>													
+								</li>									
+							</ul>	
+							@endforeach
+							<div class="header-cart-total">
+								
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -467,37 +492,31 @@
 					<nav class="menu">
 						<ul class="main_menu">
 							<li>
-								<a href="index.html">Home</a>
-								<ul class="sub_menu">
-									<li><a href="index.html">Homepage V1</a></li>
-									<li><a href="home-02.html">Homepage V2</a></li>
-									<li><a href="home-03.html">Homepage V3</a></li>
-								</ul>
+								<a href="/user">Home</a>								
 							</li>
 
 							<li>
 								<a href="product.html">Shop</a>
 							</li>
 
-							<li class="sale-noti">
+							<li>
 								<a href="product.html">Sale</a>
 							</li>
 
 							<li>
-								<a href="cart.html">Features</a>
+								<a href="cart.html">Atomizer</a>
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+								<a href="blog.html">Device</a>
 							</li>
 
 							<li>
-								<a href="about.html">About</a>
+								<a href="about.html">Liquid</a>
 							</li>
-
 							<li>
-								<a href="contact.html">Contact</a>
-							</li>
+								<a href="{{ route('pelanggan.showTransaksi') }}">Daftar Transaksi</a>
+							</li>							
 						</ul>
 					</nav>
 				</div>
@@ -653,6 +672,36 @@
 							</div>
 						</div>
 					</div>
+
+					<span class="linedivide1"></span>
+
+					<div class="header-wrapicon2">
+						<img src="images/icons/bell.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span class="header-icons-noti">{{ $jumlahNotif }}</span>
+
+						<!-- Header cart noti -->
+						<div class="header-cart header-dropdown">
+							<ul class="header-cart-wrapitem">
+								<li class="header-cart-item">							
+									<div class="header-cart-item-txt">								
+										<a href="{{ route('pelanggan.readNotif') }}">Read all</a>
+									</div>													
+								</li>									
+							</ul>
+							@foreach($Notif as $data)	
+							<ul class="header-cart-wrapitem">
+								<li class="header-cart-item">							
+									<div class="header-cart-item-txt">								
+										{{ $data->data }}
+									</div>													
+								</li>									
+							</ul>	
+							@endforeach
+							<div class="header-cart-total">
+								
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
@@ -699,12 +748,7 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
-						<ul class="sub-menu">
-							<li><a href="index.html">Homepage V1</a></li>
-							<li><a href="home-02.html">Homepage V2</a></li>
-							<li><a href="home-03.html">Homepage V3</a></li>
-						</ul>
+						<a href="/user">Home</a>						
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
 
@@ -717,20 +761,19 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Features</a>
+						<a href="cart.html">Atomizer</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="blog.html">Blog</a>
+						<a href="blog.html">Device</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="about.html">About</a>
+						<a href="about.html">Liquid</a>
 					</li>
-
-					<li class="item-menu-mobile">
-						<a href="contact.html">Contact</a>
-					</li>
+					<li>
+						<a href="{{ route('pelanggan.showTransaksi') }}">Daftar Transaksi</a>
+					</li>					
 				</ul>
 			</nav>
 		</div>

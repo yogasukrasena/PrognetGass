@@ -2,6 +2,7 @@
 @section('title','Dasboard')
 @section('content')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
 <div class="content mt-3">
 
     <div class="col-sm-12">
@@ -10,24 +11,68 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
+
         </div>
     </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Chart Demo</div>
-
-                    <div class="panel-body">
-                        {!! $chart->html() !!}
-                    </div>
+     
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="mb-3">Pendapatan Tahun ini </h4>
+                    <canvas id="canvas"></canvas>
                 </div>
             </div>
         </div>
-    </div>
-    {!! Charts::scripts() !!}
-    {!! $chart->script() !!}
+
+         <div class="col-lg-6">
+            <div class="card">                
+                <div class="card-body">                                     
+                  <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                      <thead>
+                          <tr>
+                              <th>NO</th>
+                              <th>Bulan</th>
+                              <th>Pendapatan</th>                                  
+                          </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($reportBulanan as $data)
+                          <tr>
+                              <td>{{ $loop->iteration }}</td>
+                              <td>{{ $data->bulan }}</td>
+                              <td>{{ $data->pendapatan }}</td>                                  
+                          </tr>
+                          @endforeach    
+                      </tbody>
+                  </table>                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card">                
+                <div class="card-body">                                     
+                  <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                      <thead>
+                          <tr>
+                              <th>NO</th>
+                              <th>Tahun</th>
+                              <th>Pendapatan</th>                                  
+                          </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($reportTahunan as $data)
+                          <tr>
+                              <td>{{ $loop->iteration }}</td>
+                              <td>{{ $data->tahun }}</td>
+                              <td>{{ $data->pendapatan }}</td>                                  
+                          </tr>
+                          @endforeach    
+                      </tbody>
+                  </table>                    
+                </div>
+            </div>
+        </div>
     
     <div class="col-sm-6 col-lg-3">
         <div class="card text-white bg-flat-color-1">
@@ -58,6 +103,7 @@
         </div>
     </div>
     <!--/.col-->
+    
 
     <div class="col-sm-6 col-lg-3">
         <div class="card text-white bg-flat-color-2">
@@ -251,9 +297,7 @@
 
                 </div>
                 <!--/.row-->
-                <div class="chart-wrapper mt-4">
-                    <canvas id="trafficChart" style="height:200px;" height="200"></canvas>
-                </div>
+               
 
             </div>
             <div class="card-footer">
@@ -404,4 +448,46 @@
 
 
 </div> <!-- .content -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {{--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js" charset="utf-8"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script>
+        var url = "{{url('/chart')}}";
+            var Pendapatan = new Array();
+            var Labels = new Array();
+            var Bulan = new Array();
+            $(document).ready(function(){
+              $.get(url, function(response){
+                response.forEach(function(data){
+                    Pendapatan.push(data.pendapatan);
+                    Labels.push(data.pendapatan);                    
+                    Bulan.push(data.bulan);
+                });
+                var ctx = document.getElementById("canvas").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                      type: 'bar',
+                      data: {
+                          labels:Bulan,
+                          datasets: [{
+                              label: 'Pendapatan',
+                              data: Pendapatan,
+                              borderWidth: 1
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      beginAtZero:true
+                                  }
+                              }]
+                          }
+                      }
+                  });
+              });
+            });
+    </script>
+
 @endsection

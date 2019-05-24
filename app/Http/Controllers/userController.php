@@ -8,6 +8,7 @@ use App\GambarProduk;
 use App\KategoriProduk;
 use App\Carts;
 use App\User;
+use App\ReviewProduk;
 
 class userController extends Controller
 {
@@ -96,7 +97,13 @@ class userController extends Controller
         ->where('product_category_details.category_id', '=', '9')
         ->get();
 
-        return view('viewUser.detailProduct', compact('showData', 'showFoto', 'showKategori', 'showProduct', 'showFotoside', 'countFoto'));
+        $showReview = ReviewProduk::select('product_reviews.*', 'users.name')
+        ->join('users', 'product_reviews.user_id', '=', 'users.id')
+        ->where('product_id',$id)->get();
+
+        $jumlahReview = ReviewProduk::select('product_reviews.*')->where('product_id',$id)->count();
+
+        return view('viewUser.detailProduct', compact('showData', 'showFoto', 'showKategori', 'showProduct', 'showFotoside', 'countFoto', 'showReview', 'jumlahReview'));
     }
 
     /**

@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/chart','AdminController@chart');
 
 // ----------------------------------MENAMPILKAN DATA------------------------------------------------
 Route::get('admin/showKategori','kategoriController@tampil')->name('admin.showKategori');
