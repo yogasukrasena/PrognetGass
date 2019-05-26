@@ -11,7 +11,6 @@ use Charts;
 use App\Quotation;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\NotifikasiAdmin;
-
 use Auth;
 
 

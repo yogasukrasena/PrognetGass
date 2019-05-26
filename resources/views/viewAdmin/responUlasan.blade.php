@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header"><strong>Company</strong><small> Form</small></div>
         <div class="card-body card-block">
-          <form class="forms-sample"  method="POST" action="{{ route('admin.storeRespon') }}" enctype="multipart/form-data">
+          <form class="forms-sample"  method="POST" action="{{ route('admin.storeRespon') }}" >
             @csrf
             <div class="form-group">
               @if (session('alert'))

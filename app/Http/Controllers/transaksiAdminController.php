@@ -185,12 +185,15 @@ class transaksiAdminController extends Controller
         $inReview->save();
 
         $user_id = ReviewProduk::select('product_reviews.user_id')
-        ->where('product_reviews.id', $request->idUlasan);
-        
+        ->where('product_reviews.id', $request->idUlasan)->get();
+
         $useid = User::where('id',$user_id)->get();
+  
+        foreach($useid as $data){
+            $data->notify(new NotifikasiUser('Transaksi Terverifikasi'));    
+        }        
         
-        foreach($useid as $data)        
-        $data->notify(new NotifikasiUser('Transaksi Terverifikasi'));
+
 
         return redirect()->back()->with('alert','Respon Berhasil di Tambahkan');
     }         

@@ -10,7 +10,7 @@
 <!-- Cart -->
 	<section class="cart bgwhite p-t-70 p-b-100">
 		@foreach($show as $data)
-		@if(!empty($review))
+		@if(!empty($review->product_id) and !empty($review->user_id))
 			<section class="relateproduct bgwhite p-t-45 p-b-138">
 			<div class="container">
 				<div class="p-t-33 p-b-60">
